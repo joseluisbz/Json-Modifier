@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: self-consumed
+
+server:
+  port: 8080
+
+controllers:
+  external: 'external'
+  internal: 'internal'

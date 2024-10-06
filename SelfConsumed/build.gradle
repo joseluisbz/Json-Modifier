@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.7.18' // To keep Microservice Up!!!
+    implementation 'org.springframework.boot:spring-boot-starter:2.7.18'
+    //implementation 'org.springframework:spring-core:5.3.39'
+    implementation 'org.springframework:spring-web:5.3.39'
+
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.16.1'
+
+    //implementation 'com.fasterxml.jackson.core:jackson-core:2.17.2' // For @Jacksonized
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2' // For @Jacksonized
+
+    implementation 'jakarta.validation:jakarta.validation-api:3.1.0' // for @NotNull
+
+
+
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor  'org.projectlombok:lombok:1.18.34'
+
+}
+
+test {
+    useJUnitPlatform()
+}
