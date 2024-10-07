@@ -151,16 +151,13 @@ public class JsonMapperUtil {
             ArrayNode arrayNode = (ArrayNode) currentJsonNode;
             for (int i = 0; i < arrayNode.size(); i++) {
                 String currentArrayPath = currentPath + PATH_SEPARATOR + i;
-                System.out.println("currentArrayPath: " + currentArrayPath);
                 boolean incrementIndex = modifierDTO.modifiedPaths.stream().anyMatch(mp -> mp.newPath.equals(currentArrayPath));
-                System.out.println("incrementIndex: " + incrementIndex);
 
                 int incrementArray = 0;
                 modifierDTO.modifiedPaths.stream().forEach(
                         mp ->
                         {
                             if (currentArrayPath.equals(mp.newPath)) {
-                                System.out.println("DEBE INSERTARSE");
                                 inserter(modifierDTO, false, currentJsonNode, currentFieldName, currentArrayPath, true, PATH_SEPARATOR);
                             }
                         }
@@ -198,21 +195,12 @@ public class JsonMapperUtil {
                 .filter(pm -> !pm.processed)
                 .filter(pm -> pm.operation == Operation.INSERT)
                 .forEach(pmI -> {
-                    System.out.println();
-                    System.out.println("BUSCANDO pmI.newPath: " + pmI.newPath);
-
                     Iterable<String> iterable = currentJsonNode::fieldNames;
                     List<String> listFieldNames = StreamSupport
                             .stream(iterable.spliterator(), false)
                             .collect(Collectors.toList());
-
-                    System.out.println("currentFieldName: " + currentFieldName + ", currentPath: " + currentPath + " -> size: " + currentJsonNode.size() + " -> listFieldNames: " + listFieldNames);
-
                     if (pmI.newPath.startsWith(currentPath)) {
                         String currentPathRemoved = pmI.newPath.replaceFirst(currentPath, "");
-                        System.out.println("currentPathRemoved: " + currentPathRemoved);
-
-
                         Optional<String> optionalPathFound =
                                 listFieldNames.stream().filter(fn ->
                                         (currentPathRemoved.startsWith(PATH_SEPARATOR + fn) || currentPathRemoved.startsWith(fn))
@@ -222,17 +210,8 @@ public class JsonMapperUtil {
                         int indexFind = tokensPath.length > 1 && isInteger(tokensPath[1]) ? Integer.parseInt(tokensPath[1]) : -1;
                         boolean isIndexContained = currentJsonNode.isArray() && (indexFind >= 0 && currentJsonNode.size() > indexFind);
 
-                        System.out.println("/ + optionalPathFound: " + PATH_SEPARATOR + optionalPathFound);
-                        System.out.println("Is Array: " + currentJsonNode.isArray() + ", /" + indexFind + ", isIndexContained: " + isIndexContained + ", Size: " + currentJsonNode.size());
-                        if (initial) {
-                            System.out.println("INITIAL!!!");
-                        } else {
-                            System.out.println("NO   INITIAL!!!");
-                        }
                         boolean comparison = initial ? pmI.waitFor == null : currentPath.equals(pmI.waitFor);
-                        System.out.println("pmI.waitFor: " + pmI.waitFor);
                         if (!isIndexContained && optionalPathFound.isEmpty() && comparison) {
-                            System.out.println("AGREGAR");
                             pmI.processed = true;
                             String[] newPaths = pmI.newPath.split(PATH_SEPARATOR);
                             String newPath = newPaths[newPaths.length - 1];
@@ -246,28 +225,16 @@ public class JsonMapperUtil {
                             } catch (IOException e) {
                                 System.out.println("NO SE PUDO AGREGAR: " + e.getMessage());
                             }
-                            System.out.println("agregado");
                         }
 
                         if (isIndexContained || optionalPathFound.isPresent()) {
-                            System.out.println("POSTERGAR Fue encontrada una opcion");
                             if (PATH_SEPARATOR.equals(currentPath)) {
-                                System.out.println(1);
                                 pmI.waitFor = currentPath + optionalPathFound.get();
                             } else {
-                                System.out.println(2);
-                                if (optionalPathFound.isPresent()) {
-                                    pmI.waitFor = currentPath + PATH_SEPARATOR + optionalPathFound.get();
-                                } else {
-                                    pmI.waitFor = currentPath + PATH_SEPARATOR + indexFind;
-                                }
+                                pmI.waitFor = optionalPathFound.map(s -> currentPath + PATH_SEPARATOR + s).orElseGet(() -> currentPath + PATH_SEPARATOR + indexFind);
                             }
-                            System.out.println("pmI.waitFor : " + pmI.waitFor);
-                            System.out.println("Postergado!!!");
                         }
-                        System.out.println();
                     }
-                    System.out.println("Otro PMI");
                 });
     }
 
