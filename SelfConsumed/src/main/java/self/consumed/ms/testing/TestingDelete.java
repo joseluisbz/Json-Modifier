@@ -9,6 +9,9 @@ import static self.consumed.ms.util.JsonMapperUtil.pathsJsonModifier;
 
 public class TestingDelete {
     public static void testDelete() throws IOException {
+        System.out.println();
+        System.out.println("testDelete");
+
         String jsonInput = "{\"fecha\":\"2024-09-16T20:12:35.1034441\",\"dato\":{\"entero\":5,\"actions\":[{\"code\":\"1\",\"description\":\"one\"},{\"code\":\"2\",\"description\":\"two\"}]}}";
         System.out.println("jsonInput:" + System.lineSeparator() + jsonInput);
         List<JsonMapperUtil.PathModifier> listPathModifier = List.of(
@@ -42,5 +45,8 @@ public class TestingDelete {
         );
         jsonOutput = pathsJsonModifier(jsonInput, listPathModifier);
         System.out.println("jsonOutput:" + System.lineSeparator() + jsonOutput);
+
+        System.out.println("testDelete" );
+        System.out.println();
     }
 }

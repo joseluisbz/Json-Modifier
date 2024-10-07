@@ -10,6 +10,7 @@ import java.io.File;
 import java.nio.file.Files;
 
 import static self.consumed.ms.testing.TestingDelete.testDelete;
+import static self.consumed.ms.testing.TestingInsert.testInsert;
 import static self.consumed.ms.testing.TestingReplace.testReplace;
 import static self.consumed.ms.util.JsonMapperUtil.getMapper;
 
@@ -31,8 +32,9 @@ public class SelfConsumedApplication {
 
             JsonNode jsonJsonNode = parentJsonNode.get("json");
 
-            testDelete();
-            testReplace();
+            //testDelete();
+            //testReplace();
+            testInsert();
 
         } catch (Exception e) {
             log.error("Error e: {}", e.getMessage(), e);
