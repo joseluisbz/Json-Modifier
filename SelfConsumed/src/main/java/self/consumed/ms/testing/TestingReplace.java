@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static self.consumed.ms.util.JsonMapperUtil.pathsJsonExcluder;
+import static self.consumed.ms.util.JsonMapperUtil.pathsJsonModifier;
 
 public class TestingReplace {
     public static void testReplace() throws IOException {
@@ -36,7 +36,7 @@ public class TestingReplace {
         );
 
 
-        List<JsonMapperUtil.PathModifier> listModified = List.of(
+        List<JsonMapperUtil.PathModifier> listPathModifier = List.of(
                 JsonMapperUtil.PathModifier.builder()
                         .operation(JsonMapperUtil.Operation.REPLACE)
                         .oldPath("/fecha")
@@ -60,7 +60,7 @@ public class TestingReplace {
                         .newPath("ultimo")
                         .object(objectNode)
                         .build());
-        String jsonOutput = pathsJsonExcluder(jsonInput, listModified);
+        String jsonOutput = pathsJsonModifier(jsonInput, listPathModifier);
         System.out.println("jsonOutput:" + System.lineSeparator() + jsonOutput);
     }
 }

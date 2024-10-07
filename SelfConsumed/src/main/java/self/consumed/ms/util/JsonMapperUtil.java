@@ -43,7 +43,7 @@ public class JsonMapperUtil {
         }
     }
 
-    public static String pathsJsonExcluder(String jsonInput, List<PathModifier> listExcluded) throws IOException {
+    public static String pathsJsonModifier(String jsonInput, List<PathModifier> listPathModifier) throws IOException {
         JsonNode jsonNodeInput = getMapper().readTree(jsonInput);
         StringWriter stringWriter = new StringWriter();
         ModifierDTO modifierDTO = ModifierDTO
@@ -53,7 +53,7 @@ public class JsonMapperUtil {
                 .pathDeque(new ArrayDeque<>())
                 .isRootObject(jsonNodeInput.isObject())
                 .isRootArray(jsonNodeInput.isArray())
-                .modifiedProperties(listExcluded)
+                .modifiedPaths(listPathModifier)
                 .build();
 
         traverse(modifierDTO, jsonNodeInput, "", modifierDTO.isRootArray);
@@ -81,7 +81,7 @@ public class JsonMapperUtil {
         Collections.reverse(paths);
         String currentPath = PATH_SEPARATOR + String.join(PATH_SEPARATOR, paths);
         System.out.println("currentFieldName: " + currentFieldName + ", currentPath: " + currentPath);
-        Optional<PathModifier> optionalFoundPathReplacer = modifierDTO.modifiedProperties
+        Optional<PathModifier> optionalFoundPathReplacer = modifierDTO.modifiedPaths
                 .stream()
                 .filter(pr -> pr.oldPath.equals(currentPath))
                 .findAny();
@@ -160,7 +160,7 @@ public class JsonMapperUtil {
         private Deque<String> pathDeque;
         private boolean isRootObject;
         private boolean isRootArray;
-        private List<PathModifier> modifiedProperties;
+        private List<PathModifier> modifiedPaths;
     }
 
     @Data
