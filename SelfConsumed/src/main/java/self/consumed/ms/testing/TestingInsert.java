@@ -38,35 +38,33 @@ public class TestingInsert {
                 );
 
         List<JsonMapperUtil.PathModifier> listPathModifier = List.of(
-                /*
                 JsonMapperUtil.PathModifier.builder()
                         .operation(JsonMapperUtil.Operation.INSERT)
                         .newPath("/contacts")
                         .object(arrayNode)
                         .build(),
-                */
                 /*Revisar*/
-                /*
+
                 JsonMapperUtil.PathModifier.builder()
                         .operation(JsonMapperUtil.Operation.INSERT)
                         .newPath("/dato/actions/1/arreglo")
                         .object(arrayNode)
                         .build()
                 ,
-                */
+
                 JsonMapperUtil.PathModifier.builder()
                         .operation(JsonMapperUtil.Operation.INSERT)
                         .newPath("/dato/actions/2")
                         .object(objectNode)
                         .build()
-                /*
+
                 ,
                 JsonMapperUtil.PathModifier.builder()
                         .operation(JsonMapperUtil.Operation.INSERT)
                         .newPath("/dato/address")
                         .object(objectNode)
                         .build()
-                */
+
         );
 
         String jsonOutput = pathsJsonModifier(jsonInput, listPathModifier);
