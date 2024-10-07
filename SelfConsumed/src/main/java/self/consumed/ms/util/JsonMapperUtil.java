@@ -135,8 +135,8 @@ public class JsonMapperUtil {
         } else if (currentJsonNode.isArray()) {
             if (modifierDTO.isRootObject || modifierDTO.isRootArray && !currentPath.equals(PATH_SEPARATOR)) {
                 modifierDTO.generator.writeFieldName(currentFieldName);
+                modifierDTO.generator.writeStartArray();
             }
-            modifierDTO.generator.writeStartArray();
             ArrayNode arrayNode = (ArrayNode) currentJsonNode;
             for (int i = 0; i < arrayNode.size(); i++) {
                 modifierDTO.pathDeque.push(String.valueOf(i));
