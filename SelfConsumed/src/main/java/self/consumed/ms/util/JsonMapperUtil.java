@@ -135,6 +135,8 @@ public class JsonMapperUtil {
         } else if (currentJsonNode.isArray()) {
             if (modifierDTO.isRootObject || modifierDTO.isRootArray && !currentPath.equals(PATH_SEPARATOR)) {
                 modifierDTO.generator.writeFieldName(currentFieldName);
+            }
+            if (!currentFieldName.isEmpty()) {
                 modifierDTO.generator.writeStartArray();
             }
             ArrayNode arrayNode = (ArrayNode) currentJsonNode;
