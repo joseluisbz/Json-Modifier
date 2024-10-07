@@ -195,12 +195,14 @@ public class JsonMapperUtil {
                 .filter(pm -> !pm.processed)
                 .filter(pm -> pm.operation == Operation.INSERT)
                 .forEach(pmI -> {
-                    Iterable<String> iterable = currentJsonNode::fieldNames;
-                    List<String> listFieldNames = StreamSupport
-                            .stream(iterable.spliterator(), false)
-                            .collect(Collectors.toList());
                     if (pmI.newPath.startsWith(currentPath)) {
                         String currentPathRemoved = pmI.newPath.replaceFirst(currentPath, "");
+
+                        Iterable<String> iterable = currentJsonNode::fieldNames;
+                        List<String> listFieldNames = StreamSupport
+                                .stream(iterable.spliterator(), false)
+                                .collect(Collectors.toList());
+
                         Optional<String> optionalPathFound =
                                 listFieldNames.stream().filter(fn ->
                                         (currentPathRemoved.startsWith(PATH_SEPARATOR + fn) || currentPathRemoved.startsWith(fn))
