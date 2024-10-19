@@ -45,7 +45,16 @@ public class JsonMapperUtil {
         }
     }
 
-    public static String pathsJsonModifier(String jsonInput, List<PathModifier> listPathModifier) {
+    public static String minify(@NotNull String string) {
+        try {
+            JsonNode jsonNode = JsonMapperUtil.getMapper().readTree(string);
+            return JsonMapperUtil.writeValueAsString(jsonNode);
+        } catch (JsonProcessingException x) {
+            throw new IllegalArgumentException(x.getMessage(), x);
+        }
+    }
+
+    public static String pathsJsonModifier(@NotNull String jsonInput, @NotNull List<PathModifier> listPathModifier) {
         try {
             JsonNode jsonNodeInput = getMapper().readTree(jsonInput);
             StringWriter stringWriter = new StringWriter();
