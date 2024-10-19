@@ -45,24 +45,28 @@ public class JsonMapperUtil {
         }
     }
 
-    public static String pathsJsonModifier(String jsonInput, List<PathModifier> listPathModifier) throws IOException {
-        JsonNode jsonNodeInput = getMapper().readTree(jsonInput);
-        StringWriter stringWriter = new StringWriter();
-        ModifierDTO modifierDTO = ModifierDTO
-                .builder()
-                .generator(getMapper().getFactory().createGenerator(stringWriter))
-                .stringWriter(stringWriter)
-                .pathDeque(new ArrayDeque<>())
-                .isRootObject(jsonNodeInput.isObject())
-                .isRootArray(jsonNodeInput.isArray())
-                .modifiedPaths(listPathModifier)
-                .build();
+    public static String pathsJsonModifier(String jsonInput, List<PathModifier> listPathModifier) {
+        try {
+            JsonNode jsonNodeInput = getMapper().readTree(jsonInput);
+            StringWriter stringWriter = new StringWriter();
+            ModifierDTO modifierDTO = ModifierDTO
+                    .builder()
+                    .generator(getMapper().getFactory().createGenerator(stringWriter))
+                    .stringWriter(stringWriter)
+                    .pathDeque(new ArrayDeque<>())
+                    .isRootObject(jsonNodeInput.isObject())
+                    .isRootArray(jsonNodeInput.isArray())
+                    .modifiedPaths(listPathModifier)
+                    .build();
 
-        traverse(modifierDTO, jsonNodeInput, "", modifierDTO.isRootArray);
-        modifierDTO.generator.flush();
+            traverse(modifierDTO, jsonNodeInput, "", modifierDTO.isRootArray);
+            modifierDTO.generator.flush();
 
-        JsonNode jsonNodeOutput = getMapper().readTree(stringWriter.toString());
-        return getMapper().writeValueAsString(jsonNodeOutput);
+            JsonNode jsonNodeOutput = getMapper().readTree(stringWriter.toString());
+            return getMapper().writeValueAsString(jsonNodeOutput);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e.getCause());
+        }
     }
 
     // https://jenkov.com/tutorials/java-json/jackson-jsonnode.html#convert-jsonnode-field

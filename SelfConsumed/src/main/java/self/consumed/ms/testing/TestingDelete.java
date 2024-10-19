@@ -8,7 +8,7 @@ import java.util.List;
 import static self.consumed.ms.util.JsonMapperUtil.pathsJsonModifier;
 
 public class TestingDelete {
-    public static void testDelete() throws IOException {
+    public static String testDelete() {
         System.out.println();
         System.out.println("testDelete");
 
@@ -48,5 +48,6 @@ public class TestingDelete {
 
         System.out.println("testDelete" );
         System.out.println();
+        return jsonOutput;
     }
 }

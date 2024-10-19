@@ -13,7 +13,7 @@ import java.util.List;
 import static self.consumed.ms.util.JsonMapperUtil.pathsJsonModifier;
 
 public class TestingInsert {
-    public static void testInsert() throws IOException {
+    public static String testInsert() {
         System.out.println();
         System.out.println("testInsert");
 
@@ -72,5 +72,6 @@ public class TestingInsert {
 
         System.out.println("testInsert" );
         System.out.println();
+        return jsonOutput;
     }
 }
