@@ -50,6 +50,7 @@ public class TestingReplace {
                 JsonMapperUtil.PathModifier.builder()
                         .operation(JsonMapperUtil.Operation.REPLACE)
                         .oldPath("/dato/actions/0")
+                        .newPath("") // Review when is array
                         .object(objectNode)
                         .build(),
                 JsonMapperUtil.PathModifier.builder()

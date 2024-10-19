@@ -32,8 +32,8 @@ public class SelfConsumedApplication {
 
             JsonNode jsonJsonNode = parentJsonNode.get("json");
 
-            //testDelete();
-            //testReplace();
+            testDelete();
+            testReplace();
             testInsert();
 
         } catch (Exception e) {

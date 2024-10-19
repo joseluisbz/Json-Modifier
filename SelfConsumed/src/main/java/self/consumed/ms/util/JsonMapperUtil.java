@@ -151,7 +151,9 @@ public class JsonMapperUtil {
             ArrayNode arrayNode = (ArrayNode) currentJsonNode;
             for (int i = 0; i < arrayNode.size(); i++) {
                 String currentArrayPath = currentPath + PATH_SEPARATOR + i;
-                boolean incrementIndex = modifierDTO.modifiedPaths.stream().anyMatch(mp -> mp.newPath.equals(currentArrayPath));
+                boolean incrementIndex = modifierDTO.modifiedPaths
+                        .stream().filter(pm -> pm.operation != Operation.DELETE) // Review
+                        .anyMatch(mp -> mp.newPath.equals(currentArrayPath));
 
                 int incrementArray = 0;
                 modifierDTO.modifiedPaths.stream().forEach(
