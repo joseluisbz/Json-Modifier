@@ -19,4 +19,9 @@ public class ExternalController {
     public ResponseEntity<?> getInternalData(@PathVariable boolean multiple) {
         return ResponseEntity.ok(externalService.getData(multiple));
     }
+
+    @GetMapping(value = "/exception/{testThrow}")
+    public ResponseEntity<?> getInternalException(@PathVariable boolean testThrow) {
+        return ResponseEntity.ok(externalService.getThrow(testThrow));
+    }
 }

@@ -2,6 +2,7 @@ package self.consumed.ms.internal.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import self.consumed.ms.internal.dto.InternalExceptionThrowerDTO;
 import self.consumed.ms.internal.dto.InternalOuterListDTO;
 import self.consumed.ms.internal.dto.InternalOuterSingleDTO;
 
@@ -67,6 +68,24 @@ public class InternalServiceImpl implements InternalService {
 
         log.info("salida: {}", writeValueAsString(salida));
         return salida;
+    }
+
+    @Override
+    public InternalExceptionThrowerDTO getSimpleDTO() {
+        var salida = InternalExceptionThrowerDTO.builder()
+                .cadena("someString")
+                .localDateTime(LocalDateTime.now())
+                .build();
+
+        log.info("salida: {}", writeValueAsString(salida));
+        return salida;
+    }
+
+    @Override
+    public InternalExceptionThrowerDTO getException() {
+        var exception = new RuntimeException("internalExceptionInService");
+        log.info("exception: {}", "RuntimeException(\"internalExceptionInService\")");
+        throw exception;
     }
 
 }

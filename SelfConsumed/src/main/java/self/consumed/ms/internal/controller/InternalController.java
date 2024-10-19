@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import self.consumed.ms.internal.dto.InternalExceptionThrowerDTO;
 import self.consumed.ms.internal.service.InternalService;
 
 @RestController
@@ -22,5 +23,15 @@ public class InternalController {
     @GetMapping(value = "data/multiple/false")
     public ResponseEntity<?> getSingleData() {
         return ResponseEntity.ok(internalService.getSingleData());
+    }
+
+    @GetMapping(value = "exception/throw/false")
+    public InternalExceptionThrowerDTO getFineDTO() {
+        return internalService.getSimpleDTO();
+    }
+
+    @GetMapping(value = "exception/throw/true")
+    public InternalExceptionThrowerDTO throwException() {
+        return internalService.getException();
     }
 }

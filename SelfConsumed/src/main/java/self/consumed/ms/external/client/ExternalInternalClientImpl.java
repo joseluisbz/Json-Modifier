@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import self.consumed.ms.external.dto.ExternalOuterDTO;
+import self.consumed.ms.external.dto.ExternalTestExceptionDTO;
 
 import java.net.URI;
 
@@ -55,6 +56,26 @@ public class ExternalInternalClientImpl implements ExternalInternalClient {
         log.info("stringResponse: {}", stringResponse);
         ExternalOuterDTO ExternalOuterDTOresponse = writeStringAsObject(stringResponse, ExternalOuterDTO.class);
         log.info("ExternalOuterDTOresponse: {}", writeValueAsString(ExternalOuterDTOresponse));*/
+        return response;
+    }
+
+    @Override
+    public ExternalTestExceptionDTO getInternalException(boolean testThrow) {
+        log.info("calling testThrow: {}", testThrow);
+
+        String urlEndPoint = "http://localhost:{serverPort}/{controller}/exception/throw/{testThrow}";
+        String url = UriComponentsBuilder.fromUriString(urlEndPoint)
+                .buildAndExpand(serverPort, controllerMapping, testThrow)
+                .toUriString();
+        log.info("url: {}", url);
+        URI uri = URI.create(url);
+
+        HttpEntity<Object> entity = new HttpEntity<>(HttpHeaders.class);
+
+        ExternalTestExceptionDTO response =
+                restTemplate.exchange(uri, HttpMethod.GET, entity, ExternalTestExceptionDTO.class)
+                        .getBody();
+        log.info("response: {}", writeValueAsString(response));
         return response;
     }
 }
