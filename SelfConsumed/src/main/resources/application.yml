@@ -8,3 +8,21 @@ server:
 controllers:
   external: 'external'
   internal: 'internal'
+
+logs-enabler:
+  packages: # Habilitan todas las clases enteras dentro del paquete
+    - self.consumed.ms.external.client
+  classes: # Habilita la clase comppleta
+    - self.consumed.ms.external.service.ExternalServiceImpl
+  entries-ranges:
+    - self.consumed.ms.external.service.ExternalServiceImpl:(100,200);(900,800)
+  classes-ranges:
+    - clazz: self.consumed.ms.internal.service.InternalServiceImpl
+      ranges:
+        - min: 0
+          max: 80
+        - min: 300
+          max: 400
+        - max: 700
+          min: 600
+
